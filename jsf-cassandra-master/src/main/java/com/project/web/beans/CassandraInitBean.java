@@ -4,31 +4,16 @@ import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Host;
 import com.datastax.driver.core.Metadata;
 import com.datastax.driver.core.PreparedStatement;
-import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
-import com.datastax.driver.core.Statement;
-import com.datastax.driver.core.querybuilder.QueryBuilder;
-import static com.datastax.driver.core.querybuilder.QueryBuilder.eq;
-import static com.datastax.driver.core.querybuilder.QueryBuilder.gt;
-import static com.datastax.driver.core.querybuilder.QueryBuilder.lt;
-import com.datastax.driver.core.querybuilder.Select;
-import com.datastax.driver.core.querybuilder.Select.Where;
 import java.io.Serializable;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
 
 //@ManagedBean
 //@ApplicationScoped//test
 public class CassandraInitBean implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Cluster cluster;
     private Session session;
@@ -50,10 +35,10 @@ public class CassandraInitBean implements Serializable {
                 .build();
         Metadata metadata = cluster.getMetadata();
         System.out.printf("Connected to cluster: %s\n", metadata.getClusterName());
-        for (Host host : metadata.getAllHosts()) {
+        metadata.getAllHosts().forEach((host) -> {
             System.out.printf("Datacenter: %s; Host: %s; Rack: %s\n",
                     host.getDatacenter(), host.getAddress(), host.getRack());
-        }
+        });
         session = cluster.connect();
 
         session.execute("CREATE KEYSPACE IF NOT EXISTS eod WITH replication "

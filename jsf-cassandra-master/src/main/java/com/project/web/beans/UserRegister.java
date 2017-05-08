@@ -15,7 +15,7 @@ public class UserRegister implements Serializable {
     private static final long serialVersionUID = 1L;
     @ManagedProperty("#{databaseBean}")
     private DatabaseBean databaseBean;
-    private List<User> resultList = new ArrayList<User>();
+    private List<User> resultList = new ArrayList<>();
     private User user;
 
     public UserRegister() {
@@ -33,7 +33,6 @@ public class UserRegister implements Serializable {
 
     public void doRegister() {
         databaseBean.createPerson(user);
-
     }
 
     public List<User> getResultList() {

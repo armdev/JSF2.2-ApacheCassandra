@@ -5,6 +5,8 @@ import java.util.UUID;
 
 public class User implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private int status;
     private UUID id;
     private String firstname;
